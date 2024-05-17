@@ -1,4 +1,4 @@
-package com.example.artem.service;
+package com.example.artem.jdbc;
 
 import lombok.Getter;
 import lombok.Setter;
