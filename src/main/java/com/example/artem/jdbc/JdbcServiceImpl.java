@@ -37,7 +37,8 @@ public class JdbcServiceImpl implements JdbcService {
 
             PreparedStatement createInventory = connection.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS inventory " +
-                            "(product_id INTEGER NOT NULL, pickup_point_id INTEGER NOT NULL, quantity INTEGER, PRIMARY KEY(product_id, pickup_point_id), FOREIGN KEY(product_id) REFERENCES product(id), FOREIGN KEY(pickup_point_id) REFERENCES pickup_point(id))");
+                            "(product_id INTEGER NOT NULL, pickup_point_id INTEGER NOT NULL, quantity INTEGER, PRIMARY KEY(product_id, pickup_point_id), FOREIGN KEY(product_id) " +
+                        "REFERENCES product(id), FOREIGN KEY(pickup_point_id) REFERENCES pickup_point(id))");
             createInventory.execute();
 
             PreparedStatement insertPickup = connection.prepareStatement("INSERT INTO pickup_point " +

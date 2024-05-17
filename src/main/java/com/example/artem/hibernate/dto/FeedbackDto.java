@@ -11,5 +11,5 @@ public class FeedbackDto {
     private String comment;
     private String author;
     private int assessment;
-    private ProductDto product;
+    private int productId;
 }

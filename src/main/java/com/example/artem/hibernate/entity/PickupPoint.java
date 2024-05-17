@@ -43,5 +43,5 @@ public class PickupPoint {
         joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "pickup_point_id", referencedColumnName = "id")}
     )
-    private List<PickupPoint> pickupPoints = new ArrayList<>();
+    private List<Product> products;
 }

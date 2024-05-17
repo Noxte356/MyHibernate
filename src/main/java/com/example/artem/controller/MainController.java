@@ -1,9 +1,13 @@
 package com.example.artem.controller;
 
 import com.example.artem.hibernate.dao.ProductDao;
+import com.example.artem.hibernate.dto.FeedbackDto;
+import com.example.artem.hibernate.dto.TopTenProductDto;
 import com.example.artem.hibernate.entity.Product;
+import com.example.artem.hibernate.service.FeedbackService;
 import com.example.artem.hibernate.service.ProductService;
 import com.example.artem.jdbc.*;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
@@ -23,10 +28,22 @@ public class MainController {
 
     private final JdbcService jdbcService;
     private final ProductService productService;
+    private final FeedbackService feedbackService;
 
     @GetMapping("/get/{id}")
     public ProductDto getProductById(@PathVariable int id) {
         return productService.getProduct(id);
+    }
+
+    @GetMapping("/getTopTen/{parameter}")
+    public List<TopTenProductDto> getTopTen(@PathVariable String parameter){
+        List<TopTenProductDto> topTen = feedbackService.getTopTen(parameter);
+        return topTen;
+    }
+
+    @PostMapping("/createFeedback")
+    public FeedbackDto createFeedback(@RequestBody FeedbackDto dto){
+        return feedbackService.create(dto);
     }
 
     @GetMapping("/")
