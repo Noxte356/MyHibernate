@@ -1,13 +1,12 @@
 package com.example.artem.controller;
 
-import com.example.artem.hibernate.dao.ProductDao;
 import com.example.artem.hibernate.dto.FeedbackDto;
+import com.example.artem.hibernate.dto.ProductInfoDto;
+import com.example.artem.hibernate.dto.TopTenPickupPointBySales;
 import com.example.artem.hibernate.dto.TopTenProductDto;
-import com.example.artem.hibernate.entity.Product;
-import com.example.artem.hibernate.service.FeedbackService;
+import com.example.artem.hibernate.service.HibernateService;
 import com.example.artem.hibernate.service.ProductService;
 import com.example.artem.jdbc.*;
-import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,22 +27,35 @@ public class MainController {
 
     private final JdbcService jdbcService;
     private final ProductService productService;
-    private final FeedbackService feedbackService;
+    private final HibernateService hibernateService;
 
     @GetMapping("/get/{id}")
     public ProductDto getProductById(@PathVariable int id) {
         return productService.getProduct(id);
     }
 
+    @GetMapping("getByParameter/{parameter}")
+    public List<PickupPointDto> getProductByParameter(@PathVariable String parameter) {
+        return hibernateService.getWhereNameExistParameter(parameter);
+    }
+
+    @GetMapping("getTopBySales")
+    public List<TopTenPickupPointBySales> getTopBySales() {return hibernateService.getTopTenPickupPointBySales();}
+
+    @GetMapping("getProductAndInfo/{id}")
+    public ProductInfoDto getProductInfoById(@PathVariable int id) {
+        return hibernateService.getProductInfo(id);
+    }
+
     @GetMapping("/getTopTen/{parameter}")
     public List<TopTenProductDto> getTopTen(@PathVariable String parameter){
-        List<TopTenProductDto> topTen = feedbackService.getTopTen(parameter);
+        List<TopTenProductDto> topTen = hibernateService.getTopTen(parameter);
         return topTen;
     }
 
     @PostMapping("/createFeedback")
     public FeedbackDto createFeedback(@RequestBody FeedbackDto dto){
-        return feedbackService.create(dto);
+        return hibernateService.create(dto);
     }
 
     @GetMapping("/")
@@ -78,9 +90,9 @@ public class MainController {
         return ResponseEntity.ok(bool);
     }
 
-    @PostMapping("get-product")
-    public ResponseEntity<Boolean> getProduct(@RequestBody GetProductDto dto) {
-        boolean bool = jdbcService.buyProduct(dto);
+    @PostMapping("saleProduct")
+    public ResponseEntity<Boolean> getProduct(@RequestBody SaleProductDto dto) {
+        boolean bool = hibernateService.saleProduct(dto);
         return ResponseEntity.ok(bool);
     }
 }

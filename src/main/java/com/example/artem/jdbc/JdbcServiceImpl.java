@@ -120,7 +120,7 @@ public class JdbcServiceImpl implements JdbcService {
     }
 
     @Override
-    public boolean buyProduct(GetProductDto dto) {
+    public boolean buyProduct(SaleProductDto dto) {
         try (final Connection connection = getConnection()) {
             connection.setAutoCommit(false);
             PreparedStatement selectStatement = connection.prepareStatement("SELECT inventory.quantity FROM inventory WHERE product_id = ? AND pickup_point_id = ?");

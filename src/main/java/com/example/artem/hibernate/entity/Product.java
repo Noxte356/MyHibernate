@@ -38,6 +38,9 @@ public class Product {
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Feedback> feedbackList;
 
+    @OneToMany(mappedBy = "salesProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SaleHistory> saleHistories;
+
     @ManyToMany
     @JoinTable(
         name = "inventory",

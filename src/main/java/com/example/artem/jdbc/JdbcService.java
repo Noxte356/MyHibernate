@@ -8,7 +8,7 @@ public interface JdbcService {
 
     boolean addProduct(AddProductDto dto);
 
-    boolean buyProduct(GetProductDto dto);
+    boolean buyProduct(SaleProductDto dto);
 
     List<PickupPointDto> getAllPickupPoint();
 

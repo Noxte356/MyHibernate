@@ -4,6 +4,7 @@ import com.example.artem.hibernate.entity.Feedback;
 import com.example.artem.hibernate.entity.Inventory;
 import com.example.artem.hibernate.entity.PickupPoint;
 import com.example.artem.hibernate.entity.Product;
+import com.example.artem.hibernate.entity.SaleHistory;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -21,6 +22,7 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(Inventory.class);
                 configuration.addAnnotatedClass(PickupPoint.class);
                 configuration.addAnnotatedClass(Product.class);
+                configuration.addAnnotatedClass(SaleHistory.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
             }catch (Exception e) {
